@@ -55,7 +55,7 @@ const AmazonHeader = () => {
             src={cartIcon} 
             alt="Cart" 
           />
-          <div className="absolute top-[4px] left-[22px] w-[26px] text-center text-[rgb(240,136,4)] text-[16px] font-bold">
+          <div className="js-cart-quantity absolute top-[4px] left-[22px] w-[26px] text-center text-[rgb(240,136,4)] text-[16px] font-bold">
             0
           </div>
           <div className="mt-[12px] text-[15px] font-bold">Cart</div>
