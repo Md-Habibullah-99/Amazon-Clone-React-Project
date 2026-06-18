@@ -12,8 +12,6 @@ export default function Home() {
       <br />
       <br />
       <br />
-      <br />
-      <br />
         <h1>Home</h1>
         <p>This is the Home.</p>
 
