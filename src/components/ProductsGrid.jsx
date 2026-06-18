@@ -54,7 +54,7 @@ const ProductsGrid = () => {
               />
             </div>
 
-            <div className="h-[36px] mb-[5px] line-clamp-2 leading-4 text-[16px]">
+            <div className="h-[36px] mt-[1px] mb-[4px] line-clamp-2 leading-4 text-[16px]">
               {product.name}
             </div>
 
@@ -64,17 +64,17 @@ const ProductsGrid = () => {
                 src={product.getStarsUrl()} 
                 alt="Rating"
               />
-              <div className="text-[rgb(1,124,182)] cursor-pointer mt-[3px]">
+              <div className="text-[rgb(1,124,182)] cursor-pointer mt-[4px] text-[16px]">
                 {product.rating.count}
               </div>
             </div>
 
-            <div className="font-bold mb-[10px]">
+            <div className="font-bold mt-[-4px] mb-[4px] pt-0 text-[16px]">
               {product.getPrice()}
             </div>
 
-            <div className="mb-[17px]">
-              <select className={`select-on-productId-${product.id} bg-gray-100 border border-gray-300 rounded-[8px] px-2 py-1 `}>
+            <div className="mb-[14px]">
+              <select className={`select-on-productId-${product.id} bg-gray-100 border border-gray-300 rounded-[8px] px-1 py-1 text-[14px] shadow-[0_2px_5px_rgba(213,217,217,0.5)]`}>
                 {[1,2,3,4,5,6,7,8,9,10].map(num => (
                   <option key={num} value={num}>{num}</option>
                 ))}
@@ -82,12 +82,12 @@ const ProductsGrid = () => {
             </div>
 
             {product.extraInfoHTML && (
-              <div dangerouslySetInnerHTML={{ __html: product.extraInfoHTML() }} />
+              <div className="text-[16px] text-gray-600" dangerouslySetInnerHTML={{ __html: product.extraInfoHTML() }} />
             )}
 
             <div className="flex-1"></div>
 
-            <div className={`text-[rgb(6,125,98)] text-[16px] flex items-center mb-[8px] transition-opacity duration-300 ${
+            <div className={`text-[rgb(6,125,98)] text-[16px] flex items-center mb-[2px] transition-opacity duration-300 ${
               addedProducts[product.id] ? 'opacity-100' : 'opacity-0'
             }`}>
               <img 
@@ -99,7 +99,7 @@ const ProductsGrid = () => {
             </div>
 
             <button 
-              className="w-full py-[8px] px-[8px] rounded-[50px] bg-[rgb(254,189,105)] hover:bg-[rgb(252,180,90)] transition-colors cursor-pointer border-none"
+              className="w-full text-[12px] py-[4px] px-[8px] mt-[-4px] rounded-[50px] border-[rgb(252,210,0)] bg-[rgb(255,216,20)]  hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] transition-colors cursor-pointer border-none shadow-[0_2px_5px_rgba(213,217,217,0.5)]"
               onClick={() => handleAddToCart(product.id)}
             >
               Add to Cart
