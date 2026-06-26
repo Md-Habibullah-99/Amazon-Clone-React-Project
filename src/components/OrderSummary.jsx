@@ -5,7 +5,7 @@ import { getProduct, formatCurrency } from "../assets/data/products.jsx";
 import { deliveryOptions, getDeliveryOption } from "../assets/data/deliveryOptions.jsx";
 import { PaymentSummary } from "./PaymentSummary.jsx";
 
-export function OrderSummary() {
+export default function OrderSummary() {
   const [cartItems, setCartItems] = useState([]);
   const [editingProductId, setEditingProductId] = useState(null);
   const [quantityInput, setQuantityInput] = useState('');
@@ -108,101 +108,103 @@ export function OrderSummary() {
     });
   };
 
-  const itemCount = calculateCartQuantity();
 
   return (
-    <>
-      <div className="checkout-middle-header-js">
-        Checkout (<a className="return-to-home-link" href="amazon.html">{itemCount} items</a>)
-      </div>
+    <div className="mx-auto mt-[140px] mb-[100px] max-w-[1100px] px-0 max-[1000px]:max-w-[500px]">
 
-      <div className="js-order-summary">
-        {cartItems.map((cartItem) => {
-          const isEditing = editingProductId === cartItem.productId;
-          
-          return (
-            <div 
-              key={cartItem.productId}
-              className={`cart-item-container js-cart-item-container-${cartItem.product.id}`}
-            >
-              <div className={`delivery-date js-delivery-date-${cartItem.product}`}>
-                Delivery date: {cartItem.deliveryDate}
-              </div>
+      <div className="font-extrabold text-[22px] mb-[18px] mx-0 px-0">Review your order</div>
 
-              <div className="cart-item-details-grid">
-                <img 
-                  className="product-image"
-                  src={cartItem.product.image} 
-                  alt={cartItem.product.name}
-                />
-
-                <div className="cart-item-details">
-                  <div className="product-name">
-                    {cartItem.product.name}
-                  </div>
-                  <div className="product-price">
-                    {cartItem.product.getPrice()}
-                  </div>
-                  <div className="product-quantity">
-                    <span>
-                      Quantity: 
-                      <span 
-                        className={`quantity-label quantity-label-js-${cartItem.product.id}`}
-                        data-product-id={cartItem.product.id}
-                      >
-                        {isEditing ? (
-                          <input
-                            type="number"
-                            className="update-quantity-link-js-input"
-                            value={quantityInput}
-                            onChange={(e) => setQuantityInput(e.target.value)}
-                            autoFocus
-                          />
-                        ) : (
-                          cartItem.quantity
-                        )}
-                      </span>
-                    </span>
-
-                    {isEditing ? (
-                      <span 
-                        className="save-quantity-link link-primary save-quantity-link-js"
-                        onClick={() => handleSaveQuantity(cartItem.productId)}
-                      >
-                        Save
-                      </span>
-                    ) : (
-                      <>
-                        <span 
-                          className="update-quantity-link link-primary update-quantity-link-js"
-                          onClick={() => handleUpdateQuantity(cartItem.productId)}
-                        >
-                          Update
-                        </span>
-                        <span 
-                          className="delete-quantity-link link-primary js-delete-link"
-                          onClick={() => handleDeleteItem(cartItem.productId)}
-                        >
-                          Delete
-                        </span>
-                      </>
-                    )}
-                  </div>
+      <div className="grid items-start grid-cols-[1fr_350px] gap-x-[12px] max-[1000px]:grid-cols-1">
+        <div>
+          {cartItems.map((cartItem) => {
+            const isEditing = editingProductId === cartItem.productId;
+            
+            return (
+              <div 
+                key={cartItem.productId}
+                className={`cart-item-container js-cart-item-container-${cartItem.product.id} border border-[rgb(222,222,222)] rounded-[4px] p-[18px] mb-[12px]`}
+              >
+                <div className={`delivery-date js-delivery-date-${cartItem.product} text-[rgb(0,118,0)] font-bold text-[19px] mt-[5px] mb-[22px]`}>
+                  Delivery date: {cartItem.deliveryDate}
                 </div>
 
-                <div className="delivery-options">
-                  <div className="delivery-options-title">
-                    Choose a delivery option:
+                <div className="grid grid-cols-[100px_1fr_1fr] gap-x-[25px] max-[1000px]:grid-cols-[100px_1fr] max-[1000px]:gap-y-[30px]">
+                  <img 
+                    className="max-w-full max-h-[120px] mx-auto"
+                    src={cartItem.product.image} 
+                    alt={cartItem.product.name}
+                  />
+
+                  <div className="cart-item-details">
+                    <div className="product-name font-bold mb-[8px]">
+                      {cartItem.product.name}
+                    </div>
+                    <div className="product-price text-[rgb(177,39,4)] font-bold mb-[5px]">
+                      {cartItem.product.getPrice()}
+                    </div>
+                    <div className="product-quantity">
+                      <span>
+                        Quantity: 
+                        <span 
+                          className={`quantity-label quantity-label-js-${cartItem.product.id}`}
+                          data-product-id={cartItem.product.id}
+                        >
+                          {isEditing ? (
+                            <input
+                              type="number"
+                              className="update-quantity-link-js-input max-w-[30px] border-2 border-[rgb(165,149,2)] rounded-[3px] mr-0"
+                              value={quantityInput}
+                              onChange={(e) => setQuantityInput(e.target.value)}
+                              autoFocus
+                            />
+                          ) : (
+                            cartItem.quantity
+                          )}
+                        </span>
+                      </span>
+
+                      {isEditing ? (
+                        <span 
+                          className="save-quantity-link link-primary save-quantity-link-js"
+                          onClick={() => handleSaveQuantity(cartItem.productId)}
+                        >
+                          Save
+                        </span>
+                      ) : (
+                        <>
+                          <span 
+                            className="update-quantity-link link-primary update-quantity-link-js"
+                            onClick={() => handleUpdateQuantity(cartItem.productId)}
+                          >
+                            Update
+                          </span>
+                          <span 
+                            className="delete-quantity-link link-primary js-delete-link"
+                            onClick={() => handleDeleteItem(cartItem.productId)}
+                          >
+                            Delete
+                          </span>
+                        </>
+                      )}
+                    </div>
                   </div>
-                  {renderDeliveryOptions(cartItem)}
+
+                  <div className="delivery-options max-[1000px]:col-span-2">
+                    <div className="delivery-options-title font-bold mb-[10px]">
+                      Choose a delivery option:
+                    </div>
+                    {renderDeliveryOptions(cartItem)}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <PaymentSummary />
-    </>
+        <div className="payment-summary border border-[rgb(222,222,222)] rounded-[4px] p-[18px] pb-[5px] max-[1000px]:row-start-1 max-[1000px]:mb-[12px]">
+          <PaymentSummary />
+        </div>
+      </div>
+    </div>
   );
 }

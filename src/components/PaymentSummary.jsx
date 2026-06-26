@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import calculateCartQuantity, { cart } from "../assets/data/cart.jsx";
 import { getProduct, formatCurrency } from "../assets/data/products.jsx";
 import { getDeliveryOption } from "../assets/data/deliveryOptions.jsx";
-import addOrder from "../assets/data/orders.js";
+import addOrder from "../assets/data/orders.jsx";
 
 
 export function PaymentSummary() {
@@ -72,47 +72,47 @@ export function PaymentSummary() {
 
   return (
     <div>
-      <div className="payment-summary-title">
+      <div className="payment-summary-title font-bold text-[18px] mb-3">
         Order Summary
       </div>
 
-      <div className="payment-summary-row">
+      <div className="payment-summary-row grid grid-cols-[1fr_auto] text-[15px] mb-2.25">
         <div>Items ({paymentData.itemCount}):</div>
-        <div className="payment-summary-money">
+        <div className="payment-summary-money text-right">
           ${formatCurrency(paymentData.productPriceCents)}
         </div>
       </div>
 
-      <div className="payment-summary-row">
+      <div className="payment-summary-row grid grid-cols-[1fr_auto] text-[15px] mb-2.25">
         <div>Shipping &amp; handling:</div>
-        <div className="payment-summary-money">
+        <div className="payment-summary-money text-right">
           ${formatCurrency(paymentData.shippingPriceCents)}
         </div>
       </div>
 
-      <div className="payment-summary-row subtotal-row">
+      <div className="payment-summary-row subtotal-row grid grid-cols-[1fr_auto] text-[15px] mb-2.25 border-t border-[rgb(222,222,222)] pt-2.25">
         <div>Total before tax:</div>
-        <div className="payment-summary-money">
+        <div className="payment-summary-money text-right">
           ${formatCurrency(paymentData.totalBeforeTaxCents)}
         </div>
       </div>
 
-      <div className="payment-summary-row">
+      <div className="payment-summary-row grid grid-cols-[1fr_auto] text-[15px] mb-2.25">
         <div>Estimated tax (10%):</div>
-        <div className="payment-summary-money">
+        <div className="payment-summary-money text-right">
           ${formatCurrency(paymentData.taxCents)}
         </div>
       </div>
 
-      <div className="payment-summary-row total-row">
+      <div className="payment-summary-row total-row grid grid-cols-[1fr_auto] mb-2.25 text-[rgb(177,39,4)] font-bold text-[18px] border-t border-[rgb(222,222,222)] pt-4.5">
         <div>Order total:</div>
-        <div className="payment-summary-money">
+        <div className="payment-summary-money text-right">
           ${formatCurrency(paymentData.totalCents)}
         </div>
       </div>
 
       <button 
-        className="place-order-button button-primary js-place-order"
+        className="place-order-button button-primary js-place-order w-full pt-3 pb-3 rounded-lg mt-2.75 mb-3.75"
         onClick={handlePlaceOrder}
         disabled={isPlacingOrder}
       >
