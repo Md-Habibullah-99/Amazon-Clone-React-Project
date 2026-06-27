@@ -12,6 +12,12 @@ export default function OrderSummary() {
 
   useEffect(() => {
     loadCartItems();
+
+    window.addEventListener('cartUpdate', loadCartItems);
+
+    return () => {
+      window.removeEventListener('cartUpdate', loadCartItems);
+    };
   }, []);
 
   const loadCartItems = () => {

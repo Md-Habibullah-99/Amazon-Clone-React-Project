@@ -19,6 +19,12 @@ export function PaymentSummary() {
 
   useEffect(() => {
     calculatePaymentSummary();
+
+    window.addEventListener('cartUpdate', calculatePaymentSummary);
+
+    return () => {
+      window.removeEventListener('cartUpdate', calculatePaymentSummary);
+    };
   }, []);
 
   const calculatePaymentSummary = () => {
