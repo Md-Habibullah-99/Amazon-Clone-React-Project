@@ -15,7 +15,10 @@ const ProductsGrid = () => {
   }, []);
 
   const handleAddToCart = (productId) => {
-    addToCart(productId);
+    const selectElement = document.querySelector(`.select-on-productId-${productId}`);
+    const quantity = selectElement ? Number(selectElement.value) : 1;
+
+    addToCart(productId, quantity);
     
     setAddedProducts(prev => ({
       ...prev,
@@ -29,7 +32,6 @@ const ProductsGrid = () => {
       }));
     }, 1000);
     
-    const selectElement = document.querySelector(`.select-on-productId-${productId}`);
     if (selectElement) {
       selectElement.value = '1';
     }
