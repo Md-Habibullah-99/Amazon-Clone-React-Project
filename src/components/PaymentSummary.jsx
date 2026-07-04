@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import calculateCartQuantity, { cart } from "../assets/data/cart.jsx";
 import { getProduct, formatCurrency } from "../assets/data/products.jsx";
@@ -94,11 +95,13 @@ export function PaymentSummary() {
         </div>
       </div>
 
-      <button 
-        className="place-order-button button-primary js-place-order text-[12px] w-full py-[12px] rounded-lg mt-2.75 mb-3.75 border-[1px_solid_rgb(252,210,0)] bg-[rgb(255,216,20)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] cursor-pointer hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] active:bg-[rgb(255,216,20)] active:border-[rgb(252,210,0)] active:shadow-none "
-      >
-         Place your order
-      </button>
+      <Link to="/orders">
+        <button 
+          className="place-order-button button-primary js-place-order text-[12px] w-full py-[12px] rounded-lg mt-2.75 mb-3.75 border-[1px_solid_rgb(252,210,0)] bg-[rgb(255,216,20)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] cursor-pointer hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] active:bg-[rgb(255,216,20)] active:border-[rgb(252,210,0)] active:shadow-none "
+        >
+          Place your order
+        </button>
+      </Link>
     </div>
   );
 }

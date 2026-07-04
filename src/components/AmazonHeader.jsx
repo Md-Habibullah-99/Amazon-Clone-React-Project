@@ -4,6 +4,7 @@ import amazonLogoWhite from '../assets/images/amazon-logo-white.png';
 import amazonMobileLogoWhite from '../assets/images/amazon-mobile-logo-white.png';
 import searchIcon from '../assets/images/icons/search-icon.png';
 import cartIcon from '../assets/images/icons/cart-icon.png';
+import { CartQuantityBadge } from '../assets/data/cart.jsx';
 
 const AmazonHeader = () => {
   return (
@@ -55,8 +56,8 @@ const AmazonHeader = () => {
             src={cartIcon} 
             alt="Cart" 
           />
-          <div className="js-cart-quantity absolute top-[4px] left-[22px] w-[26px] text-center text-[rgb(240,136,4)] text-[16px] font-bold">
-            0
+          <div className="absolute top-[4px] left-[22px] w-[26px] text-center text-[rgb(240,136,4)] text-[16px] font-bold">
+            <CartQuantityBadge />
           </div>
           <div className="mt-[12px] text-[15px] font-bold">Cart</div>
         </Link>
