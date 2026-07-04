@@ -56,7 +56,13 @@ export default function OrderSummary() {
       } else {
         cartItem.quantity = inputValue;
         saveToStorage();
-        loadCartItems();
+        setCartItems((currentCartItems) =>
+          currentCartItems.map((item) =>
+            item.productId === productId
+              ? { ...item, quantity: inputValue }
+              : item
+          )
+        );
         // Trigger re-render of payment summary
         window.dispatchEvent(new Event('cartUpdate'));
       }
@@ -66,13 +72,21 @@ export default function OrderSummary() {
 
   const handleDeleteItem = (productId) => {
     removeFromCart(productId);
-    loadCartItems();
+    setCartItems((currentCartItems) =>
+      currentCartItems.filter((item) => item.productId !== productId)
+    );
     window.dispatchEvent(new Event('cartUpdate'));
   };
 
   const handleDeliveryOptionChange = (productId, deliveryOptionId) => {
     updateDeliveryOption(productId, deliveryOptionId);
-    loadCartItems();
+    setCartItems((currentCartItems) =>
+      currentCartItems.map((item) =>
+        item.productId === productId
+          ? { ...item, deliveryOptionId }
+          : item
+      )
+    );
     window.dispatchEvent(new Event('cartUpdate'));
   };
 

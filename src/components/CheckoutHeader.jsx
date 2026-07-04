@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import calculateCartQuantity from '../assets/data/cart.jsx';
+import { useCart } from '../assets/data/cart.jsx';
 
 import amazonMobile from '../assets/images/amazon-logo.png';
 import amazonMobileLogo from '../assets/images/amazon-mobile-logo.png';
 import searchIcon from '../assets/images/icons/search-icon.png';
 import lockIcon from '../assets/images/icons/checkout-lock-icon.png';
 
-const itemCount = calculateCartQuantity();
-
 export default function CheckoutHeader() {
+  const { cartQuantity } = useCart();
+
   return (
     <header className="bg-white text-white px-[30px] py-[30px] flex items-center justify-center fixed top-0 left-0 right-0 h-[60px] z-50">
       <div className="w-[100%] max-w-[1100px] flex center">
@@ -35,7 +35,7 @@ export default function CheckoutHeader() {
         <div className="flex-1 max-w-[850px] mx-[10px] mt-[19px] flex justify-center text-black text-[24px] font-semibold">
           <div>
             Checkout (<Link to="/">
-              <span className='text-[rgb(0,113,133)]'>{itemCount} items</span>
+              <span className='text-[rgb(0,113,133)]'>{cartQuantity} items</span>
             </Link> )
           </div>
         </div>

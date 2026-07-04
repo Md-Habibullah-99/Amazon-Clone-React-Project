@@ -27,6 +27,7 @@ loadFromStorage();
 
 export function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
+  window.dispatchEvent(new Event('cartUpdate'));
 }
 
 export function addToCart(productId, quantity = 1) {
@@ -133,8 +134,18 @@ export function useCart() {
       }
     };
 
+    const handleCartUpdate = () => {
+      loadFromStorage();
+      updateCartState();
+    };
+
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener('cartUpdate', handleCartUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('cartUpdate', handleCartUpdate);
+    };
   }, []);
 
   return {
