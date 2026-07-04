@@ -102,7 +102,7 @@ export default function OrderSummary() {
       return (
         <div 
           key={deliveryOption.id}
-          className="delivery-option js-delivery-option"
+          className="delivery-option js-delivery-option grid grid-cols-[24px_1fr] mb-3 cursor-pointer"
           data-product-id={cartItem.productId}
           data-delivery-option-id={deliveryOption.id}
           onClick={() => handleDeliveryOptionChange(cartItem.productId, deliveryOption.id)}
@@ -110,16 +110,16 @@ export default function OrderSummary() {
           <input
             type="radio"
             checked={isChecked}
-            className="delivery-option-input"
+            className="delivery-option-input ml-0 mr-[2px] cursor-pointer"
             id={`delivery-${cartItem.productId}-${deliveryOption.id}`}
             name={`delivery-option-${cartItem.productId}`}
             readOnly
           />
-          <div>
-            <div className="delivery-option-date">
+          <div className="ml-[2px] text-[16px] leading-4.5">
+            <div className="delivery-option-date text-[rgb(0,118,0)] font-bold">
               {dateString}
             </div>
-            <div className="delivery-option-price">
+            <div className="delivery-option-price text-[#6b6375]">
               {priceString} Shipping
             </div>
           </div>
@@ -144,11 +144,11 @@ export default function OrderSummary() {
                 key={cartItem.productId}
                 className={`cart-item-container js-cart-item-container-${cartItem.product.id} border border-[rgb(222,222,222)] rounded-[4px] p-[18px] mb-[12px]`}
               >
-                <div className={`delivery-date js-delivery-date-${cartItem.product} text-[rgb(0,118,0)] font-bold text-[19px] mt-[5px] mb-[22px]`}>
+                <div className={`delivery-date js-delivery-date-${cartItem.product} text-[rgb(0,118,0)] font-bold text-[19px] mt-[4px] mb-[22px]`}>
                   Delivery date: {cartItem.deliveryDate}
                 </div>
 
-                <div className="grid grid-cols-[100px_1fr_1fr] gap-x-[25px] max-[1000px]:grid-cols-[100px_1fr] max-[1000px]:gap-y-[30px]">
+                <div className="mt-[-3px] grid grid-cols-[100px_1fr_1fr] gap-x-[25px] max-[1000px]:grid-cols-[100px_1fr] max-[1000px]:gap-y-[30px]">
                   <img 
                     className="max-w-full max-h-[120px] mx-auto"
                     src={cartItem.product.image} 
@@ -156,23 +156,23 @@ export default function OrderSummary() {
                   />
 
                   <div className="cart-item-details">
-                    <div className="product-name font-bold mb-[8px]">
+                    <div className="product-name font-bold mb-[0px] text-[16px]">
                       {cartItem.product.name}
                     </div>
-                    <div className="product-price text-[rgb(177,39,4)] font-bold mb-[5px]">
+                    <div className="product-price text-[rgb(177,39,4)] font-bold mb-[0px] text-[16px]">
                       {cartItem.product.getPrice()}
                     </div>
-                    <div className="product-quantity">
+                    <div className="product-quantity mt-[-2px] text-[16px] flex gap-x-[6px]">
                       <span>
                         Quantity: 
                         <span 
                           className={`quantity-label quantity-label-js-${cartItem.product.id}`}
                           data-product-id={cartItem.product.id}
-                        >
+                        > {' '}
                           {isEditing ? (
                             <input
                               type="number"
-                              className="update-quantity-link-js-input max-w-[30px] border-2 border-[rgb(165,149,2)] rounded-[3px] mr-0"
+                              className="update-quantity-link-js-input max-w-[40px] border-2 border-[rgb(165,149,2)] rounded-[3px] mr-0"
                               value={quantityInput}
                               onChange={(e) => setQuantityInput(e.target.value)}
                               autoFocus
@@ -185,7 +185,7 @@ export default function OrderSummary() {
 
                       {isEditing ? (
                         <span 
-                          className="save-quantity-link link-primary save-quantity-link-js"
+                          className="save-quantity-link link-primary save-quantity-link-js text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] cursor-pointer"
                           onClick={() => handleSaveQuantity(cartItem.productId)}
                         >
                           Save
@@ -193,13 +193,13 @@ export default function OrderSummary() {
                       ) : (
                         <>
                           <span 
-                            className="update-quantity-link link-primary update-quantity-link-js"
+                            className="update-quantity-link link-primary update-quantity-link-js text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] cursor-pointer"
                             onClick={() => handleUpdateQuantity(cartItem.productId)}
                           >
                             Update
                           </span>
                           <span 
-                            className="delete-quantity-link link-primary js-delete-link"
+                            className="delete-quantity-link link-primary js-delete-link text-[rgb(1,124,182)] hover:text-[rgb(196,80,0)] cursor-pointer"
                             onClick={() => handleDeleteItem(cartItem.productId)}
                           >
                             Delete
@@ -210,7 +210,7 @@ export default function OrderSummary() {
                   </div>
 
                   <div className="delivery-options max-[1000px]:col-span-2">
-                    <div className="delivery-options-title font-bold mb-[10px]">
+                    <div className="delivery-options-title font-bold mb-[10px] text-[17px]">
                       Choose a delivery option:
                     </div>
                     {renderDeliveryOptions(cartItem)}

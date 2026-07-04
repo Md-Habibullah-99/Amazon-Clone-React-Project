@@ -15,7 +15,6 @@ export function PaymentSummary() {
     itemCount: 0
   });
 
-  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   useEffect(() => {
     calculatePaymentSummary();
@@ -53,31 +52,9 @@ export function PaymentSummary() {
     });
   };
 
-  const handlePlaceOrder = async () => {
-    setIsPlacingOrder(true);
-    try {
-      const response = await fetch("https://supersimplebackend.dev/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          cart: cart
-        })
-      });
-      
-      const order = await response.json();
-      addOrder(order);
-      window.location.href = "orders.html";
-      
-    } catch (error) {
-      console.log('Unexpected error. Please try again later.');
-      setIsPlacingOrder(false);
-    }
-  };
 
   return (
-    <div>
+    <div className="leading-4">
       <div className="payment-summary-title font-bold text-[18px] mb-3">
         Order Summary
       </div>
@@ -118,11 +95,9 @@ export function PaymentSummary() {
       </div>
 
       <button 
-        className="place-order-button button-primary js-place-order w-full pt-3 pb-3 rounded-lg mt-2.75 mb-3.75"
-        onClick={handlePlaceOrder}
-        disabled={isPlacingOrder}
+        className="place-order-button button-primary js-place-order text-[12px] w-full py-[12px] rounded-lg mt-2.75 mb-3.75 border-[1px_solid_rgb(252,210,0)] bg-[rgb(255,216,20)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] cursor-pointer hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] active:bg-[rgb(255,216,20)] active:border-[rgb(252,210,0)] active:shadow-none "
       >
-        {isPlacingOrder ? 'Placing Order...' : 'Place your order'}
+         Place your order
       </button>
     </div>
   );

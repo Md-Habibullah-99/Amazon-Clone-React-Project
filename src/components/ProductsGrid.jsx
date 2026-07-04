@@ -89,7 +89,7 @@ const ProductsGrid = () => {
 
             <div className="flex-1"></div>
 
-            <div className={`text-[rgb(6,125,98)] text-[16px] flex items-center mb-[2px] transition-opacity duration-300 ${
+            <div className={`text-[rgb(6,125,98)] text-[16px] flex items-center mb-[12px] mr-[12px] transition-opacity duration-300 ${
               addedProducts[product.id] ? 'opacity-100' : 'opacity-0'
             }`}>
               <img 
