@@ -31,7 +31,7 @@ export function generateOrderId() {
     return result;
   };
 
-  const timestampPart = Date.now().toString().slice(-7);
+  const timestampPart = Date.now().toString().slice(-8);
 
   return `${randomDigits(3)}-${timestampPart}-${randomDigits(7)}`;
 }

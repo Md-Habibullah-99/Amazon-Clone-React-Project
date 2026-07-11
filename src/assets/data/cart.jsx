@@ -82,7 +82,7 @@ export function updateCartQuantity() {
   }
 
   const cartQuantity = calculateCartQuantity();
-  cartQuantityElement.innerHTML = cartQuantity ? cartQuantity : '';
+  cartQuantityElement.innerHTML = cartQuantity ? cartQuantity : '0';
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
@@ -164,7 +164,7 @@ export const CartQuantityBadge = () => {
   
   return (
     <span className="js-cart-quantity cart-quantity">
-      {cartQuantity > 0 ? cartQuantity : ''}
+      {cartQuantity > 0 ? cartQuantity : '0'}
     </span>
   );
 };
