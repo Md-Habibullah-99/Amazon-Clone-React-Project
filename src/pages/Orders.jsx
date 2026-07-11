@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const getImageUrl = (assetPath) => new URL(assetPath, import.meta.url).href;
 
@@ -100,9 +101,11 @@ const Orders = () => {
                     {/* Product Actions */}
                     <div className="self-start max-[800px]:col-start-2 max-[800px]:mb-[30px] max-[450px]:col-auto max-[450px]:mb-[70px]">
                       <a href={`abc/${order.id}?productId=${product.id}`} className="block">
-                        <button className="w-full text-[15px] p-2 text-[#212121] bg-white border border-[#d5d9d9] rounded-lg shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7fafa] active:bg-[#edfdff] active:shadow-none max-[800px]:w-[140px] max-[450px]:w-full max-[450px]:p-3">
-                          Track package
-                        </button>
+                        <Link to={`/Tracking?orderId=${order.id}&productId=${product.id}`}>
+                          <button className="w-full text-[15px] p-2 text-[#212121] bg-white border border-[#d5d9d9] rounded-lg shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7fafa] active:bg-[#edfdff] active:shadow-none max-[800px]:w-[140px] max-[450px]:w-full max-[450px]:p-3">
+                            Track package
+                          </button>
+                        </Link>
                       </a>
                     </div>
                   </React.Fragment>
