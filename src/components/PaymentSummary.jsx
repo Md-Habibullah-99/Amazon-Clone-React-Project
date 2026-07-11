@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import calculateCartQuantity, { cart } from "../assets/data/cart.jsx";
+import dayjs from 'dayjs';
+import calculateCartQuantity, { cart, saveToStorage as saveCartToStorage } from "../assets/data/cart.jsx";
 import { getProduct, formatCurrency } from "../assets/data/products.jsx";
 import { getDeliveryOption } from "../assets/data/deliveryOptions.jsx";
-import addOrder from "../assets/data/orders.jsx";
+import addOrder, { generateOrderId } from "../assets/data/orders.jsx";
 
 
 export function PaymentSummary() {
+  const navigate = useNavigate();
   const [paymentData, setPaymentData] = useState({
     productPriceCents: 0,
     shippingPriceCents: 0,
@@ -54,6 +56,50 @@ export function PaymentSummary() {
   };
 
 
+  const handlePlaceOrder = () => {
+    if (cart.length === 0) return;
+
+    const orderDate = dayjs().toISOString();
+    let totalCents = 0;
+
+    const products = cart.map((cartItem) => {
+      const product = getProduct(cartItem.productId);
+      const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
+      const deliveryDays = deliveryOption.deliveryDays;
+      const estimatedDeliveryDate = dayjs(orderDate).add(deliveryDays, 'day').toISOString();
+
+      const lineTotalCents = product.priceCents * cartItem.quantity + deliveryOption.priceCents;
+      totalCents += lineTotalCents;
+
+      return {
+        productId: product.id,
+        quantity: cartItem.quantity,
+        deliveryOptionId: deliveryOption.id,
+        deliveryDays,
+        estimatedDeliveryDate,
+        priceCents: product.priceCents,
+        shippingPriceCents: deliveryOption.priceCents
+      };
+    });
+
+    const taxCents = totalCents * 0.1;
+
+    const order = {
+      id: generateOrderId(),
+      orderDate,
+      products,
+      totalCents: totalCents + taxCents
+    };
+
+    addOrder(order);
+
+    // Empty the cart now that the order has been placed
+    cart.length = 0;
+    saveCartToStorage();
+
+    navigate('/orders');
+  };
+
   return (
     <div className="leading-4">
       <div className="payment-summary-title font-bold text-[18px] mb-3">
@@ -95,13 +141,12 @@ export function PaymentSummary() {
         </div>
       </div>
 
-      <Link to="/orders">
-        <button 
-          className="place-order-button button-primary js-place-order text-[12px] w-full py-[12px] rounded-lg mt-2.75 mb-3.75 border-[1px_solid_rgb(252,210,0)] bg-[rgb(255,216,20)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] cursor-pointer hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] active:bg-[rgb(255,216,20)] active:border-[rgb(252,210,0)] active:shadow-none "
-        >
-          Place your order
-        </button>
-      </Link>
+      <button
+        onClick={handlePlaceOrder}
+        className="place-order-button button-primary js-place-order text-[12px] w-full py-[12px] rounded-lg mt-2.75 mb-3.75 border-[1px_solid_rgb(252,210,0)] bg-[rgb(255,216,20)] shadow-[0_2px_5px_rgba(213,217,217,0.5)] cursor-pointer hover:bg-[rgb(247,202,0)] hover:border-[rgb(242,194,0)] active:bg-[rgb(255,216,20)] active:border-[rgb(252,210,0)] active:shadow-none "
+      >
+        Place your order
+      </button>
     </div>
   );
 }
