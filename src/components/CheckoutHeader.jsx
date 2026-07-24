@@ -12,27 +12,30 @@ export default function CheckoutHeader() {
   const { cartQuantity } = useCart();
 
   return (
-    <header className="bg-white text-white px-[30px] py-[30px] flex items-center justify-center fixed top-0 left-0 right-0 h-[60px] z-50">
-      <div className="w-[100%] max-w-[1100px] flex center">
+    /* ADDED FOR RESPONSIVENESS: smaller fixed height + padding on mobile so
+       the row doesn't get cramped; standard height restored from sm: up */
+    <header className="bg-white text-white px-3 sm:px-[30px] py-3 sm:py-[30px] flex items-center justify-center fixed top-0 left-0 right-0 h-[56px] sm:h-[60px] z-50">
+      <div className="w-[100%] max-w-[1100px] flex items-center justify-between sm:justify-start">
 
         {/* Left Section */}
-        <div className="w-[150px] ml-[-12px] flex items-center">
+        <div className="w-auto sm:w-[150px] sm:ml-[-12px] flex items-center">
           <Link to="/" className="inline-block p-[6px] cursor-pointer no-underline ">
-            <img 
-              className="w-[100px] mt-[14px] max-[575px]:hidden" 
-              src={amazonMobile} 
-              alt="Amazon" 
+            <img
+              className="w-[90px] sm:w-[100px] mt-0 sm:mt-[14px] hidden sm:block"
+              src={amazonMobile}
+              alt="Amazon"
             />
-            <img 
-              className="hidden max-[575px]:block h-[35px] mt-[8px]" 
-              src={amazonMobileLogo} 
-              alt="Amazon" 
+            <img
+              className="block sm:hidden h-[30px] mt-0"
+              src={amazonMobileLogo}
+              alt="Amazon"
             />
           </Link>
         </div>
 
         {/* Middle Section */}
-        <div className="flex-1 max-w-[850px] mx-[10px] mt-[19px] flex justify-center text-black text-[24px] font-semibold">
+        {/* ADDED FOR RESPONSIVENESS: smaller, wrapping-safe text on mobile */}
+        <div className="flex-1 max-w-[850px] mx-[10px] mt-0 sm:mt-[19px] flex justify-end sm:justify-center text-black text-[16px] sm:text-[24px] font-semibold text-center">
           <div>
             Checkout (<Link to="/">
               <span className='text-[rgb(0,113,133)]'>{cartQuantity} items</span>
@@ -41,7 +44,7 @@ export default function CheckoutHeader() {
         </div>
 
         {/* Right Section */}
-        <div className="w-[144px] mx-[7px] mt-[16px] flex justify-end ">
+        <div className="hidden sm:flex w-[144px] mx-[7px] mt-[16px] justify-end ">
           <img src={lockIcon} alt="lock icon" className='w-[16px] h-[21px]' />
         </div>
 

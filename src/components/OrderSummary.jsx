@@ -130,11 +130,15 @@ export default function OrderSummary() {
 
 
   return (
-    <div className="mx-auto mt-[140px] mb-[100px] max-w-[1100px] px-0 max-[1000px]:max-w-[500px]">
+    /* ADDED FOR RESPONSIVENESS: mobile-first - full-width with side padding on
+       phones/tablets, capped at 1100px with no side padding on lg: (desktop) */
+    <div className="mx-auto mt-[90px] sm:mt-[110px] lg:mt-[140px] mb-[60px] sm:mb-[100px] w-full max-w-[500px] lg:max-w-[1100px] px-3 lg:px-0">
 
-      <div className="font-extrabold text-[22px] mb-[18px] mx-0 px-0">Review your order</div>
+      <div className="font-extrabold text-[18px] sm:text-[22px] mb-[18px] mx-0 px-0">Review your order</div>
 
-      <div className="grid items-start grid-cols-[1fr_350px] gap-x-[12px] max-[1000px]:grid-cols-1">
+      {/* ADDED FOR RESPONSIVENESS: single stacked column on mobile/tablet,
+          two-column (cart items left / subtotal right) from lg: up */}
+      <div className="grid items-start grid-cols-1 lg:grid-cols-[1fr_350px] gap-x-[12px]">
         <div>
           {cartItems.map((cartItem) => {
             const isEditing = editingProductId === cartItem.productId;
@@ -148,9 +152,11 @@ export default function OrderSummary() {
                   Delivery date: {cartItem.deliveryDate}
                 </div>
 
-                <div className="mt-[-3px] grid grid-cols-[100px_1fr_1fr] gap-x-[25px] max-[1000px]:grid-cols-[100px_1fr] max-[1000px]:gap-y-[30px]">
+                {/* ADDED FOR RESPONSIVENESS: image+details+delivery stack more
+                    compactly on mobile/tablet, spread into 3 columns on lg: up */}
+                <div className="mt-[-3px] grid grid-cols-[100px_1fr] lg:grid-cols-[100px_1fr_1fr] gap-x-[15px] sm:gap-x-[25px] gap-y-[20px] lg:gap-y-0">
                   <img 
-                    className="max-w-full max-h-[120px] mx-auto"
+                    className="max-w-full max-h-[100px] sm:max-h-[120px] mx-auto"
                     src={cartItem.product.image} 
                     alt={cartItem.product.name}
                   />
@@ -209,7 +215,8 @@ export default function OrderSummary() {
                     </div>
                   </div>
 
-                  <div className="delivery-options max-[1000px]:col-span-2">
+                  {/* ADDED FOR RESPONSIVENESS: spans both mobile columns, becomes its own column on lg: */}
+                  <div className="delivery-options col-span-2 lg:col-span-1">
                     <div className="delivery-options-title font-bold mb-[10px] text-[17px]">
                       Choose a delivery option:
                     </div>
@@ -221,7 +228,9 @@ export default function OrderSummary() {
           })}
         </div>
 
-        <div className="payment-summary border border-[rgb(222,222,222)] rounded-[4px] p-[18px] pb-[5px] max-[1000px]:row-start-1 max-[1000px]:mb-[12px]">
+        {/* ADDED FOR RESPONSIVENESS: subtotal box appears above cart items on
+            mobile/tablet (row-start-1), moves to the right column on lg: up */}
+        <div className="payment-summary border border-[rgb(222,222,222)] rounded-[4px] p-[18px] pb-[5px] row-start-1 mb-[12px] lg:row-start-auto lg:mb-0">
           <PaymentSummary />
         </div>
       </div>

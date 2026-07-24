@@ -5,20 +5,24 @@ import Checkout from './pages/Checkout.jsx'
 import Orders from './pages/Orders.jsx'
 import Tracking from './pages/Traking.jsx'
 import Layout from './Layout.jsx'
+/* SEARCH FUNCTIONALITY: provide searchTerm/setSearchTerm to the whole app */
+import { SearchProvider } from './context/SearchContext.jsx'
 
 export default function App() {
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}> 
-          <Route path="/" element={<Home />} />
-          <Route path="/Checkout" element={<Checkout />} />
-          <Route path="/Orders" element={<Orders />} />
-          <Route path="/Tracking" element={<Tracking />} />
-        </Route>
-      </Routes>
-    </Router>
+    <SearchProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}> 
+            <Route path="/" element={<Home />} />
+            <Route path="/Checkout" element={<Checkout />} />
+            <Route path="/Orders" element={<Orders />} />
+            <Route path="/Tracking" element={<Tracking />} />
+          </Route>
+        </Routes>
+      </Router>
+    </SearchProvider>
   )
 }
 
