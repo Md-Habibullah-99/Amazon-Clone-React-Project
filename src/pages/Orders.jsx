@@ -4,11 +4,13 @@ import dayjs from 'dayjs';
 
 import { orders, loadOrdersFromStorage } from '../assets/data/orders.jsx';
 import { getProduct, formatCurrency } from '../assets/data/products.jsx';
+import { useSearch } from '../context/SearchContext.jsx';
 
 const getImageUrl = (assetPath) => new URL(assetPath, import.meta.url).href;
 
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
+  const { searchTerm } = useSearch();
 
   useEffect(() => {
     const loadOrders = () => {
@@ -25,6 +27,29 @@ const Orders = () => {
     };
   }, []);
 
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
+  const filteredOrders = normalizedSearch
+    ? orderList
+        .map((order) => ({
+          ...order,
+          products: order.products.filter((orderProduct) => {
+            const product = getProduct(orderProduct.productId);
+            if (!product) return false;
+
+            const nameMatch = product.name?.toLowerCase().includes(normalizedSearch);
+            const keywordMatch = Array.isArray(product.keywords) &&
+              product.keywords.some((keyword) =>
+                keyword.toLowerCase().includes(normalizedSearch)
+              );
+            const typeMatch = product.type?.toLowerCase().includes(normalizedSearch);
+
+            return nameMatch || keywordMatch || typeMatch;
+          })
+        }))
+        .filter((order) => order.products.length > 0)
+    : orderList;
+
   return (
     <div className="font-roboto text-[#212121] m-0">
       <div className="max-w-[850px] mt-[90px] mb-[100px] px-5 mx-auto">
@@ -37,9 +62,13 @@ const Orders = () => {
               Start shopping
             </Link>
           </div>
+        ) : normalizedSearch && filteredOrders.length === 0 ? (
+          <div className="text-[#565959]">
+            No ordered products found for "{searchTerm}".
+          </div>
         ) : (
           <div className="grid grid-cols-1 gap-[50px]">
-            {orderList.map((order) => (
+            {filteredOrders.map((order) => (
               <div key={order.id} className="order-container">
                 {/* Order Header */}
                 <div className="bg-[#f0f2f2] border border-[#d5d9d9] flex items-center justify-between py-5 px-[25px] rounded-t-lg max-[575px]:flex-col max-[575px]:items-start max-[575px]:leading-[23px] max-[575px]:p-[15px]">
@@ -84,14 +113,16 @@ const Orders = () => {
                             Arriving on: {dayjs(orderProduct.estimatedDeliveryDate).format('dddd, MMMM D')}
                           </div>
                           <div className="mb-2 max-[450px]:mb-[15px]">Quantity: {orderProduct.quantity}</div>
-                          <button className="text-[15px] w-[140px] h-9 rounded-[8px] flex items-center justify-center text-[#212121] bg-[#ffd814] border border-[#fcd200] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7ca00] hover:border-[#f2c200] active:bg-[#ffd814] active:border-[#fcd200] active:shadow-none max-[800px]:mb-[10px] max-[450px]:w-full max-[450px]:mb-[15px]">
-                            <img
-                              src={getImageUrl('../assets/images/icons/buy-again.png')}
-                              alt="Buy again"
-                              className="w-[25px] mr-[15px]"
+                          <Link to={`/`}>
+                            <button className="text-[15px] w-[140px] h-9 rounded-[8px] flex items-center justify-center text-[#212121] bg-[#ffd814] border border-[#fcd200] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7ca00] hover:border-[#f2c200] active:bg-[#ffd814] active:border-[#fcd200] active:shadow-none max-[800px]:mb-[10px] max-[450px]:w-full max-[450px]:mb-[15px]">
+                              <img
+                                src={getImageUrl('../assets/images/icons/buy-again.png')}
+                                alt="Buy again"
+                                className="w-[25px] mr-[15px]"
                             />
                             <span>Buy it again</span>
                           </button>
+                          </Link>
                         </div>
 
                         {/* Product Actions */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import amazonLogoWhite from '../assets/images/amazon-logo-white.png';
 import amazonMobileLogoWhite from '../assets/images/amazon-mobile-logo-white.png';
 import searchIcon from '../assets/images/icons/search-icon.png';
@@ -12,12 +12,27 @@ const AmazonHeader = () => {
   /* SEARCH FUNCTIONALITY: pull shared searchTerm state from context */
   const { searchTerm, setSearchTerm } = useSearch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const clearSearchAndGoHome = () => {
+    setSearchTerm('');
+    navigate('/');
+  };
 
   /* SEARCH FUNCTIONALITY: pressing Enter or clicking the search button
      navigates back to the home/product feed so the user sees filtered results */
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    navigate('/');
+
+    const isOrdersPage = location.pathname.toLowerCase() === '/orders';
+    navigate(isOrdersPage ? '/orders' : '/');
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      clearSearchAndGoHome();
+      e.currentTarget.blur();
+    }
   };
 
   return (
@@ -28,7 +43,11 @@ const AmazonHeader = () => {
       {/* Left Section - Logo */}
       {/* ADDED FOR RESPONSIVENESS: fixed width from sm:, auto/shrink on mobile */}
       <div className="w-auto sm:w-[180px] flex-shrink-0 order-1">
-        <Link to="/" className="inline-block p-[6px] rounded-[2px] cursor-pointer no-underline border border-transparent hover:border-white">
+        <Link
+          to="/"
+          onClick={clearSearchAndGoHome}
+          className="inline-block p-[6px] rounded-[2px] cursor-pointer no-underline border border-transparent hover:border-white"
+        >
           <img
             className="w-[100px] mt-[8px] hidden sm:block"
             src={amazonLogoWhite}
@@ -54,6 +73,7 @@ const AmazonHeader = () => {
           value={searchTerm}
           /* SEARCH FUNCTIONALITY: update shared searchTerm on every keystroke */
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleSearchKeyDown}
           placeholder="Search products, brands, categories..."
           className="flex-1 w-0 text-[14px] sm:text-[16px] bg-white h-[38px] sm:h-[40px] pl-[12px] sm:pl-[15px] border-none rounded-l-[4px] outline-none text-black"
         />
