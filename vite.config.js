@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: "/amazon_rc",
+  base: "/amazon_rc/",
 })

@@ -1,5 +1,6 @@
 import React from 'react';
 import productsData from './products.json';
+import { getAssetUrl } from './assetUrls.js';
 
 // Utility functions
 export function formatCurrency(priceCents) {
@@ -7,7 +8,7 @@ export function formatCurrency(priceCents) {
 }
 
 function getImageUrl(assetPath) {
-  return new URL(assetPath, import.meta.url).href;
+  return getAssetUrl(assetPath);
 }
 
 function normalizeProductDetails(productDetails) {

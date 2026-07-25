@@ -4,9 +4,8 @@ import dayjs from 'dayjs';
 
 import { orders, loadOrdersFromStorage } from '../assets/data/orders.jsx';
 import { getProduct, formatCurrency } from '../assets/data/products.jsx';
+import { getAssetUrl } from '../assets/data/assetUrls.js';
 import { useSearch } from '../context/SearchContext.jsx';
-
-const getImageUrl = (assetPath) => new URL(assetPath, import.meta.url).href;
 
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
@@ -116,7 +115,7 @@ const Orders = () => {
                           <Link to={`/`}>
                             <button className="text-[15px] w-[140px] h-9 rounded-[8px] flex items-center justify-center text-[#212121] bg-[#ffd814] border border-[#fcd200] shadow-[0_2px_5px_rgba(213,217,217,0.5)] hover:bg-[#f7ca00] hover:border-[#f2c200] active:bg-[#ffd814] active:border-[#fcd200] active:shadow-none max-[800px]:mb-[10px] max-[450px]:w-full max-[450px]:mb-[15px]">
                               <img
-                                src={getImageUrl('../assets/images/icons/buy-again.png')}
+                                src={getAssetUrl('../images/icons/buy-again.png')}
                                 alt="Buy again"
                                 className="w-[25px] mr-[15px]"
                             />
